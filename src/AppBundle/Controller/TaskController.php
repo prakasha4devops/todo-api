@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RequestParam; 
 use FOS\RestBundle\Request\ParamFetcher; 
 use FOS\RestBundle\Routing\ClassResourceInterface; 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc; 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException; 
 
 /**
@@ -20,6 +21,13 @@ class TaskController extends FOSRestController implements ClassResourceInterface
      * Get tasks
      * 
      * @return array
+     * 
+     * @ApiDoc(
+     *      description="Returns a collection of Task", 
+     *      statusCodes = {
+     *          200 = "Returned when successful"
+     *      }
+     * )
      */
     public function cgetAction() 
     {
@@ -32,6 +40,15 @@ class TaskController extends FOSRestController implements ClassResourceInterface
      * @param integer $id
      * @return Task 
      * @throws NotFoundHttpException The task cannot be found.
+     * 
+     * @ApiDoc(
+     *      description="Returns a Task by its identifier", 
+     *      output = "AppBundle\Entity\Task", 
+     *      statusCodes = {
+     *          200 = "Returned when successful", 
+     *          404 = "Returned when the Task cannot be found"
+     *      }
+     * )
      */
     public function getAction($id) 
     {
@@ -51,6 +68,15 @@ class TaskController extends FOSRestController implements ClassResourceInterface
      * 
      * @RequestParam(name="label", description="Task label.") 
      * @RequestParam(name="due_date", nullable=true, description="Task due date.") 
+     * 
+     * @ApiDoc(
+     *      description="Create and returns a new Task", 
+     *      output = "AppBundle\Entity\Task", 
+     *      statusCodes = {
+     *          200 = "Returned when successful", 
+     *          400 = "Returned when one or more parameters are missing or incorrect"
+     *      }
+     * )
      */
     public function postAction(ParamFetcher $paramFetcher) 
     {
@@ -81,6 +107,16 @@ class TaskController extends FOSRestController implements ClassResourceInterface
      * @RequestParam(name="label", description="Task label.") 
      * @RequestParam(name="done", description="True if the task is done, false otherwise.") 
      * @RequestParam(name="due_date", description="Task due date.") 
+     * 
+     * @ApiDoc(
+     *      description="Update a Task", 
+     *      output = "AppBundle\Entity\Task", 
+     *      statusCodes = {
+     *          200 = "Returned when successful", 
+     *          400 = "Returned when one or more parameters are missing or incorrect", 
+     *          404 = "Returned when the Task cannot be found"
+     *      }
+     * )
      */
     public function putAction(ParamFetcher $paramFetcher, $id) 
     {
@@ -118,6 +154,16 @@ class TaskController extends FOSRestController implements ClassResourceInterface
      * @RequestParam(name="label", nullable=true, description="Task label.") 
      * @RequestParam(name="done", nullable=true, description="True if the task is done, false otherwise.") 
      * @RequestParam(name="due_date", nullable=true, description="Task due date.") 
+     * 
+     * @ApiDoc(
+     *      description="Update partially a Task", 
+     *      output = "AppBundle\Entity\Task", 
+     *      statusCodes = {
+     *          200 = "Returned when successful", 
+     *          400 = "Returned when one or more parameters are missing or incorrect", 
+     *          404 = "Returned when the Task cannot be found"
+     *      }
+     * )
      */
     public function patchAction(ParamFetcher $paramFetcher, $id) 
     {
@@ -158,6 +204,15 @@ class TaskController extends FOSRestController implements ClassResourceInterface
      * @param integer $id
      * @return null
      * @throws NotFoundHttpException The task cannot be found.
+     * 
+     * @ApiDoc(
+     *      description="Delete a Task", 
+     *      output = "AppBundle\Entity\Task", 
+     *      statusCodes = {
+     *          204 = "Returned when successful", 
+     *          404 = "Returned when the Task cannot be found"
+     *      }
+     * )
      */
     public function deleteAction($id) 
     {
