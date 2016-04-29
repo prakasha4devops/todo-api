@@ -12,14 +12,16 @@
 namespace AppBundle\Util; 
 
 /**
- * Util class to concert string into boolean
+ * Util class to convert string into boolean
+ * 
+ * @author Rémi Houdelette <b0ulzy.todo@gmail.com>
  */
 final class ValueToBooleanConverter 
 {
     /**
      * Converts a string into a boolean
      * 
-     * @param $value The value to convert
+     * @param mixed $value The value to convert
      * @return boolean
      * @throws \InvalidArgumentException The value is not a valid boolean value
      */
