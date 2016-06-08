@@ -47,4 +47,3 @@ final class ValueToBooleanConverter
         return false; 
     } 
 }
-

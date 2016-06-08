@@ -22,6 +22,13 @@ class AppExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
+
+        /**
+         * @TODO
+         * Check that the date_format config value is a valid date format
+         */
+        //$time = strtotime($config['date_format']); 
+
         $container->setParameter($this->getAlias() . '.date_format', $config['date_format']); 
     }
 }
