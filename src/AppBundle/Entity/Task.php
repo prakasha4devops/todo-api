@@ -48,7 +48,7 @@ class Task
     /**
      * @var \DateTime|null
      * 
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true) 
      */
     protected $dueDate; 
 
@@ -139,7 +139,7 @@ class Task
      * @param \DateTime $dueDate
      * @return self
      */
-    public function setDueDate(\DateTime $dueDate) 
+    public function setDueDate($dueDate) 
     {
         $this->dueDate = $dueDate; 
 

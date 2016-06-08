@@ -11,12 +11,14 @@
 
 namespace AppBundle\Controller; 
 
+use AppBundle\Manager\TaskManager; 
 use AppBundle\Util\ValueToBooleanConverter; 
 use FOS\RestBundle\Controller\FOSRestController; 
 use FOS\RestBundle\Controller\Annotations\RequestParam; 
 use FOS\RestBundle\Request\ParamFetcher; 
 use FOS\RestBundle\Routing\ClassResourceInterface; 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc; 
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException; 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException; 
 
 /**
@@ -98,7 +100,15 @@ class TaskController extends FOSRestController implements ClassResourceInterface
         $task->setLabel($label); 
 
         if ($dueDate !== null) {
-            $task->setDueDate(\DateTime::createFromFormat($this->getParameter('app.date_format'), $dueDate)); 
+            $dateFormat = $this->getParameter('app.date_format'); 
+            $date = \DateTime::createFromFormat($dateFormat, $dueDate); 
+            if ($date instanceof \DateTime === false) {
+                throw new BadRequestHttpException(sprintf(
+                    'The parameter `due_date` must be a date respecting "%s" format.', 
+                    $dateFormat
+                )); 
+            }
+            $task->setDueDate($dueDate); 
         } 
 
         $taskManager->save($task); 
@@ -241,7 +251,7 @@ class TaskController extends FOSRestController implements ClassResourceInterface
     /**
      * Get task manager
      * 
-     * @return \AppBundle\Manager\EntityManager
+     * @return TaskManager
      */
     protected function getTaskManager() 
     {
